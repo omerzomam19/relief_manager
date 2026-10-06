@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ t('login') }}{% endblock %}
+{% block public %}
+<form class="glass" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <i class="fa-solid fa-hands-holding-circle logo"></i><h1>{{ t('app') }}</h1><p style="text-align:center;color:#cbd5e1">{{ t('login') }}</p>
+  <label>{{ t('username') }}<input name="username" required autofocus autocomplete="username"></label>
+  <label>{{ t('password') }}<input name="password" type="password" required autocomplete="current-password"></label>
+  <button class="btn">{{ t('login') }}</button>
+</form>
+{% endblock %}

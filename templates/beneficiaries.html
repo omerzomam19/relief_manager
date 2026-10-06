@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block heading %}{{ t('beneficiaries') }}{% endblock %}
+{% block content %}
+<div class="card">
+<form class="bar" method="get">
+  <input name="q" value="{{ q }}" placeholder="{{ t('search') }}...">
+  <button class="btn ghost sm"><i class="fa-solid fa-magnifying-glass"></i> {{ t('search') }}</button><span class="sp"></span>
+  <button type="button" class="btn" data-new><i class="fa-solid fa-plus"></i> {{ t('add') }}</button>
+</form>
+<div class="scroll"><table class="tbl">
+<thead><tr><th>#</th><th>{{ t('name') }}</th><th>{{ t('address') }}</th><th>{{ t('phone') }}</th><th>{{ t('family_size') }}</th><th>{{ t('actions') }}</th></tr></thead>
+<tbody>{% for b in rows %}<tr><td>{{ b.id }}</td><td><a href="{{ url_for('beneficiary_detail', bid=b.id) }}">{{ b.name }}</a></td><td>{{ b.address }}</td><td dir="ltr" style="text-align:start">{{ b.phone }}</td><td>{{ b.family_size }}</td>
+<td><a class="icon" href="{{ url_for('beneficiary_detail', bid=b.id) }}" title="{{ t('details') }}"><i class="fa-solid fa-eye"></i></a>
+<button class="icon" data-item='{{ b|tojson }}'><i class="fa-solid fa-pen"></i></button>
+{% if user.role == 'admin' %}<button class="icon danger" data-del="{{ url_for('beneficiary_delete', bid=b.id) }}" data-name="{{ b.name }}"><i class="fa-solid fa-trash"></i></button>{% endif %}</td></tr>
+{% else %}<tr><td colspan="6" class="muted">{{ t('no_data') }}</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="modal" id="m-form"><div class="box"><h3 id="formTitle" data-add="{{ t('add') }}" data-edit="{{ t('edit') }}"></h3>
+<form method="post" id="itemForm"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="id">
+  <label>{{ t('name') }}<input name="name" required></label>
+  <label>{{ t('address') }}<input name="address" required></label>
+  <div class="g2"><label>{{ t('phone') }}<input name="phone" dir="ltr" pattern="\+?[0-9\s\-]{7,15}"></label>
+  <label>{{ t('family_size') }}<input name="family_size" type="number" min="1" step="1" required></label></div>
+  <label>{{ t('notes') }}<textarea name="notes" rows="3"></textarea></label>
+  <div class="row"><button class="btn">{{ t('save') }}</button><button type="button" class="btn ghost" data-close>{{ t('cancel') }}</button></div>
+</form></div></div>
+{% endblock %}

@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}404{% endblock %}
+{% block content %}<div class="card center"><h1>404</h1><p>{{ t('e404') }}</p><a class="btn" href="{{ url_for('dashboard') }}"><i class="fa-solid fa-house"></i> {{ t('home') }}</a></div>{% endblock %}
+{% block public %}<div class="glass center"><h1>404</h1><p>{{ t('e404') }}</p><a class="btn" href="{{ url_for('login') }}">{{ t('login') }}</a></div>{% endblock %}

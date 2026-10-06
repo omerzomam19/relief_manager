@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "أرز",
+    "category": "غذاء",
+    "quantity": 113,
+    "unit": "كيس",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 2,
+    "name": "طحين",
+    "category": "غذاء",
+    "quantity": 87,
+    "unit": "كيس",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 3,
+    "name": "زيت طبخ",
+    "category": "غذاء",
+    "quantity": 56,
+    "unit": "عبوة",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 4,
+    "name": "سكر",
+    "category": "غذاء",
+    "quantity": 100,
+    "unit": "كيس",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 5,
+    "name": "بطانيات",
+    "category": "إيواء",
+    "quantity": 74,
+    "unit": "قطعة",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 6,
+    "name": "خيام",
+    "category": "إيواء",
+    "quantity": 6,
+    "unit": "خيمة",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 7,
+    "name": "حليب أطفال",
+    "category": "رعاية الأطفال",
+    "quantity": 34,
+    "unit": "علبة",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 8,
+    "name": "حقائب نظافة",
+    "category": "صحة",
+    "quantity": 48,
+    "unit": "حقيبة",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 9,
+    "name": "أدوية أساسية",
+    "category": "صحة",
+    "quantity": 0,
+    "unit": "صندوق",
+    "created_at": "2026-10-06 17:10"
+  },
+  {
+    "id": 10,
+    "name": "مياه شرب",
+    "category": "مياه",
+    "quantity": 180,
+    "unit": "كرتون",
+    "created_at": "2026-10-06 17:10"
+  }
+]

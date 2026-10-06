@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block heading %}{{ t('inventory') }}{% endblock %}
+{% block content %}
+<div class="card">
+<form class="bar" method="get">
+  <input name="q" value="{{ q }}" placeholder="{{ t('search') }}...">
+  <select name="cat"><option value="">{{ t('all') }}</option>{% for c in cats %}<option {{ 'selected' if c == cat }}>{{ c }}</option>{% endfor %}</select>
+  <button class="btn ghost sm"><i class="fa-solid fa-magnifying-glass"></i> {{ t('search') }}</button><span class="sp"></span>
+  <button type="button" class="btn" data-new><i class="fa-solid fa-plus"></i> {{ t('add') }}</button>
+</form>
+<div class="scroll"><table class="tbl">
+<thead><tr><th>#</th><th>{{ t('name') }}</th><th>{{ t('category') }}</th><th>{{ t('quantity') }}</th><th>{{ t('status') }}</th><th>{{ t('actions') }}</th></tr></thead>
+<tbody>{% for i in items %}{% set s = 'out' if i.quantity == 0 else ('low' if i.quantity <= low_stock else 'ok') %}
+<tr><td>{{ i.id }}</td><td>{{ i.name }}</td><td>{{ i.category }}</td><td>{{ i.quantity }} {{ i.unit }}</td><td><span class="b {{ s }}">{{ t(s) }}</span></td>
+<td><button class="icon" data-item='{{ i|tojson }}'><i class="fa-solid fa-pen"></i></button>
+{% if user.role == 'admin' %}<button class="icon danger" data-del="{{ url_for('inventory_delete', iid=i.id) }}" data-name="{{ i.name }}"><i class="fa-solid fa-trash"></i></button>{% endif %}</td></tr>
+{% else %}<tr><td colspan="6" class="muted">{{ t('no_data') }}</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="modal" id="m-form"><div class="box"><h3 id="formTitle" data-add="{{ t('add') }}" data-edit="{{ t('edit') }}"></h3>
+<form method="post" id="itemForm"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="id">
+  <label>{{ t('name') }}<input name="name" required></label>
+  <div class="g2"><label>{{ t('category') }}<input name="category" list="cats" required></label>
+  <label>{{ t('unit') }}<input name="unit" required></label></div>
+  <label>{{ t('quantity') }}<input name="quantity" type="number" min="0" step="1" required></label>
+  <datalist id="cats">{% for c in cats %}<option value="{{ c }}">{% endfor %}</datalist>
+  <div class="row"><button class="btn">{{ t('save') }}</button><button type="button" class="btn ghost" data-close>{{ t('cancel') }}</button></div>
+</form></div></div>
+{% endblock %}

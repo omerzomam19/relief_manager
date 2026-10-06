@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block heading %}{{ t('users') }}{% endblock %}
+{% block content %}
+<div class="card"><div class="bar"><span class="sp"></span><button type="button" class="btn" data-new><i class="fa-solid fa-user-plus"></i> {{ t('new_user') }}</button></div>
+<div class="scroll"><table class="tbl"><thead><tr><th>#</th><th>{{ t('username') }}</th><th>{{ t('role') }}</th><th>{{ t('created_at') }}</th><th>{{ t('actions') }}</th></tr></thead>
+<tbody>{% for u in rows %}<tr><td>{{ u.id }}</td><td>{{ u.username }}</td><td><span class="b {{ 'warn' if u.role == 'admin' else 'ok' }}">{{ t(u.role) }}</span></td><td>{{ u.created_at }}</td>
+<td>{% if u.id != user.id %}<button class="icon danger" data-del="{{ url_for('user_delete', uid=u.id) }}" data-name="{{ u.username }}"><i class="fa-solid fa-trash"></i></button>{% endif %}</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="modal" id="m-form"><div class="box"><h3 id="formTitle" data-add="{{ t('new_user') }}" data-edit="{{ t('edit') }}"></h3>
+<form method="post" id="itemForm"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="id">
+  <label>{{ t('username') }}<input name="username" required></label>
+  <label>{{ t('password') }}<input name="password" type="password" minlength="6" required autocomplete="new-password"></label>
+  <label>{{ t('role') }}<select name="role"><option value="staff">{{ t('staff') }}</option><option value="admin">{{ t('admin') }}</option></select></label>
+  <div class="row"><button class="btn">{{ t('save') }}</button><button type="button" class="btn ghost" data-close>{{ t('cancel') }}</button></div>
+</form></div></div>
+{% endblock %}

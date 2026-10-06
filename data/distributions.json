@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "beneficiary_id": 1,
+    "inventory_id": 1,
+    "quantity": 10,
+    "date": "2026-09-30 16:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 2,
+    "beneficiary_id": 1,
+    "inventory_id": 3,
+    "quantity": 4,
+    "date": "2026-09-30 15:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 3,
+    "beneficiary_id": 2,
+    "inventory_id": 2,
+    "quantity": 8,
+    "date": "2026-09-30 14:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 4,
+    "beneficiary_id": 3,
+    "inventory_id": 1,
+    "quantity": 15,
+    "date": "2026-10-01 13:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 5,
+    "beneficiary_id": 3,
+    "inventory_id": 6,
+    "quantity": 2,
+    "date": "2026-10-01 17:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 6,
+    "beneficiary_id": 4,
+    "inventory_id": 7,
+    "quantity": 6,
+    "date": "2026-10-02 16:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 7,
+    "beneficiary_id": 5,
+    "inventory_id": 5,
+    "quantity": 6,
+    "date": "2026-10-02 15:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 8,
+    "beneficiary_id": 6,
+    "inventory_id": 1,
+    "quantity": 12,
+    "date": "2026-10-03 14:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 9,
+    "beneficiary_id": 6,
+    "inventory_id": 4,
+    "quantity": 3,
+    "date": "2026-10-03 13:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 10,
+    "beneficiary_id": 7,
+    "inventory_id": 8,
+    "quantity": 2,
+    "date": "2026-10-04 17:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 11,
+    "beneficiary_id": 8,
+    "inventory_id": 9,
+    "quantity": 6,
+    "date": "2026-10-05 16:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 12,
+    "beneficiary_id": 2,
+    "inventory_id": 6,
+    "quantity": 2,
+    "date": "2026-10-05 15:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 13,
+    "beneficiary_id": 4,
+    "inventory_id": 10,
+    "quantity": 20,
+    "date": "2026-10-05 14:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 14,
+    "beneficiary_id": 1,
+    "inventory_id": 6,
+    "quantity": 2,
+    "date": "2026-10-06 13:10",
+    "created_by": "admin"
+  },
+  {
+    "id": 15,
+    "beneficiary_id": 5,
+    "inventory_id": 2,
+    "quantity": 5,
+    "date": "2026-10-06 17:10",
+    "created_by": "admin"
+  }
+]

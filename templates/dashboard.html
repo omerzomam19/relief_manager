@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block heading %}{{ t('dashboard') }}{% endblock %}
+{% block content %}
+<div class="cards">
+{% for ic, k, v in [('fa-boxes-stacked','items_n',stats.inv),('fa-people-roof','beneficiaries',stats.ben),('fa-hand-holding-heart','distributions',stats.dist),('fa-scale-balanced','st_qty',stats.qty)] %}
+<div class="card stat"><i class="fa-solid {{ ic }}"></i><div><small>{{ t(k) }}</small><b>{{ v }}</b></div></div>{% endfor %}
+</div>
+{% if low %}<div class="alert"><b><i class="fa-solid fa-triangle-exclamation"></i> {{ t('low_alert') }}:</b>
+{% for i in low %}<span class="b {{ 'bad' if i.quantity == 0 else 'warn' }}">{{ i.name }} ({{ i.quantity }})</span>{% endfor %}</div>{% endif %}
+<div class="two">
+  <div class="card"><h3>{{ t('chart_title') }}</h3><canvas id="ch" height="170"></canvas></div>
+  <div class="card"><h3>{{ t('recent') }}</h3><div class="scroll"><table class="tbl">
+    <thead><tr><th>{{ t('ben') }}</th><th>{{ t('item') }}</th><th>{{ t('quantity') }}</th><th>{{ t('date') }}</th></tr></thead>
+    <tbody>{% for d in recent %}<tr><td>{{ d.ben }}</td><td>{{ d.item }}</td><td>{{ d.quantity }} {{ d.unit }}</td><td>{{ d.date }}</td></tr>
+    {% else %}<tr><td colspan="4" class="muted">{{ t('no_data') }}</td></tr>{% endfor %}</tbody></table></div></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const D = {{ chart|tojson }};
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const ch = new Chart($('#ch'), {type: 'bar', data: {labels: D.labels.map(l => l.slice(5)), datasets: [{data: D.values, backgroundColor: '#c9a227', borderRadius: 8}]},
+  options: {plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, ticks: {precision: 0}}}}});
+function paint() { Chart.defaults.color = css('--muted'); ch.options.scales.y.grid = {color: css('--line')}; ch.update(); }
+paint(); document.addEventListener('themechange', paint);
+</script>
+{% endblock %}

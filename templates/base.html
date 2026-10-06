@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ direction }}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ t('app') }}{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light'</script>
+</head>
+{% macro tools() %}<a class="btn ghost sm" href="{{ url_for('set_lang', code='en' if lang == 'ar' else 'ar') }}"><i class="fa-solid fa-language"></i> {{ t('lang_switch') }}</a>
+<button class="btn ghost sm themeBtn" type="button"><i class="fa-solid fa-circle-half-stroke"></i></button>{% endmacro %}
+<body class="{{ 'app' if user else 'auth' }}">
+{% if user %}
+{% set nav = [('dashboard','fa-chart-pie'),('inventory','fa-boxes-stacked'),('beneficiaries','fa-people-roof'),('distribute','fa-hand-holding-heart'),('reports','fa-file-lines')] + ([('users','fa-users-gear')] if user.role == 'admin' else []) %}
+<header class="topbar">
+  <button class="btn ghost sm" id="menuBtn" type="button"><i class="fa-solid fa-bars"></i></button>
+  <h2>{% block heading %}{{ t('app') }}{% endblock %}</h2><span class="sp"></span>{{ tools() }}
+</header>
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><i class="fa-solid fa-hands-holding-circle"></i><span>{{ t('app') }}</span></div>
+  <nav>{% for ep, ic in nav %}<a href="{{ url_for(ep) }}" class="{{ 'active' if request.endpoint in (ep, ep ~ '_detail') }}"><i class="fa-solid {{ ic }}"></i><span>{{ t(ep) }}</span></a>{% endfor %}</nav>
+  <div class="me"><span><i class="fa-solid fa-user"></i> {{ user.username }}</span><a href="{{ url_for('logout') }}" title="{{ t('logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+</aside>
+<main class="main">
+  {% for c, m in get_flashed_messages(with_categories=true) %}<div class="flash {{ c }}"><span>{{ t(m) }}</span><button type="button" onclick="this.parentNode.remove()">×</button></div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<div class="modal" id="m-del"><div class="box"><h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--bad)"></i> {{ t('confirm_delete') }}</h3>
+  <p><b id="delName"></b></p><p class="muted">{{ t('sure') }}</p>
+  <form method="post" id="delForm"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row"><button class="btn danger">{{ t('delete') }}</button><button type="button" class="btn ghost" data-close>{{ t('cancel') }}</button></div></form></div></div>
+{% else %}
+<div class="tools">{{ tools() }}</div>
+{% for c, m in get_flashed_messages(with_categories=true) %}<div class="flash {{ c }}" style="position:fixed;top:70px">{{ t(m) }}</div>{% endfor %}
+{% block public %}{% endblock %}
+{% endif %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block heading %}{{ b.name }}{% endblock %}
+{% block content %}
+<div class="card"><div class="bar"><h3 style="margin:0">{{ t('details') }}</h3><span class="sp"></span><a class="btn ghost sm" href="{{ url_for('beneficiaries') }}"><i class="fa-solid fa-arrow-{{ 'right' if direction == 'rtl' else 'left' }}"></i> {{ t('back') }}</a></div>
+<div class="g2"><p><span class="muted">{{ t('name') }}:</span> {{ b.name }}</p><p><span class="muted">{{ t('phone') }}:</span> <span dir="ltr">{{ b.phone or '—' }}</span></p>
+<p><span class="muted">{{ t('address') }}:</span> {{ b.address }}</p><p><span class="muted">{{ t('family_size') }}:</span> {{ b.family_size }}</p>
+<p><span class="muted">{{ t('notes') }}:</span> {{ b.notes or '—' }}</p><p><span class="muted">{{ t('created_at') }}:</span> {{ b.created_at }}</p></div></div>
+<div class="card"><h3>{{ t('received') }}</h3><div class="scroll"><table class="tbl">
+<thead><tr><th>{{ t('date') }}</th><th>{{ t('item') }}</th><th>{{ t('quantity') }}</th><th>{{ t('created_by') }}</th></tr></thead>
+<tbody>{% for d in got %}<tr><td>{{ d.date }}</td><td>{{ d.item }}</td><td>{{ d.quantity }} {{ d.unit }}</td><td>{{ d.created_by }}</td></tr>
+{% else %}<tr><td colspan="4" class="muted">{{ t('no_data') }}</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

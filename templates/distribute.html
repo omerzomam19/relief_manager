@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block heading %}{{ t('distribute') }}{% endblock %}
+{% block content %}
+<div class="card"><h3>{{ t('new_dist') }}</h3>
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="g2">
+<label>{{ t('ben') }}<select name="beneficiary_id" required><option value="">{{ t('select') }}</option>{% for b in ben %}<option value="{{ b.id }}">{{ b.name }}</option>{% endfor %}</select></label>
+<label>{{ t('item') }}<select name="inventory_id" id="invSel" required><option value="">{{ t('select') }}</option>{% for i in inv %}<option value="{{ i.id }}" data-stock="{{ i.quantity }}" {{ 'disabled' if i.quantity == 0 }}>{{ i.name }} — {{ t('available') }}: {{ i.quantity }} {{ i.unit }}</option>{% endfor %}</select></label>
+</div>
+<label style="max-width:260px">{{ t('quantity') }}<input name="quantity" id="qty" type="number" min="1" step="1" required></label>
+<button class="btn"><i class="fa-solid fa-hand-holding-heart"></i> {{ t('distribute') }}</button></form></div>
+<div class="card"><h3>{{ t('history') }}</h3><div class="scroll"><table class="tbl">
+<thead><tr><th>#</th><th>{{ t('date') }}</th><th>{{ t('ben') }}</th><th>{{ t('item') }}</th><th>{{ t('quantity') }}</th><th>{{ t('created_by') }}</th>{% if user.role == 'admin' %}<th>{{ t('actions') }}</th>{% endif %}</tr></thead>
+<tbody>{% for d in rows %}<tr><td>{{ d.id }}</td><td>{{ d.date }}</td><td>{{ d.ben }}</td><td>{{ d.item }}</td><td>{{ d.quantity }} {{ d.unit }}</td><td>{{ d.created_by }}</td>
+{% if user.role == 'admin' %}<td><button class="icon danger" data-del="{{ url_for('distribute_delete', did=d.id) }}" data-name="#{{ d.id }} — {{ d.ben }} / {{ d.item }}"><i class="fa-solid fa-trash"></i></button></td>{% endif %}</tr>
+{% else %}<tr><td colspan="7" class="muted">{{ t('no_data') }}</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}
+{% block scripts %}<script>
+$('#invSel').onchange = e => { const o = e.target.selectedOptions[0]; $('#qty').max = o && o.dataset.stock ? o.dataset.stock : ''; };
+</script>{% endblock %}

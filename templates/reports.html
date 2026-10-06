@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block heading %}{{ t('reports') }}{% endblock %}
+{% block content %}
+<div class="card">
+<form class="bar noprint" method="get">
+  <select name="type">{% for k in ['inventory','beneficiaries','distributions'] %}<option value="{{ k }}" {{ 'selected' if k == kind }}>{{ t(k) }}</option>{% endfor %}</select>
+  <label style="margin:0">{{ t('from') }} <input type="date" name="from" value="{{ df }}"></label>
+  <label style="margin:0">{{ t('to') }} <input type="date" name="to" value="{{ dt }}"></label>
+  <button class="btn sm"><i class="fa-solid fa-filter"></i> {{ t('filter') }}</button><span class="sp"></span>
+  <a class="btn ghost sm" href="{{ url_for('reports', export=1, **args) }}"><i class="fa-solid fa-file-csv"></i> {{ t('export') }}</a>
+  <button type="button" class="btn ghost sm" onclick="window.print()"><i class="fa-solid fa-print"></i> {{ t('print') }}</button>
+</form>
+<h3>{{ t(kind) }} ({{ rows|length }})</h3>
+<div class="scroll"><table class="tbl"><thead><tr>{% for c in cols %}<th>{{ t(c) }}</th>{% endfor %}</tr></thead>
+<tbody>{% for r in rows %}<tr>{% for c in cols %}<td>{{ r[c] }}</td>{% endfor %}</tr>
+{% else %}<tr><td colspan="{{ cols|length }}" class="muted">{{ t('no_data') }}</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}
